@@ -1,0 +1,162 @@
+# [PackageDev] target_format: plist, ext: tmLanguage
+---
+name: EFML
+scopeName: text.efml
+fileTypes: [ef, eft]
+uuid: ee7d9ea0-f056-4365-bc31-0512369e8c17
+
+patterns:
+# efml_line_tag
+- name: meta.selector.efml
+  begin: ^\t*?(?=\>)
+  end: $
+  patterns:
+  - include: '#efml-tag'
+  - include: '#efml-tag-name'
+  - include: '#efml-class-mustache'
+  - include: '#efml-tag-class'
+
+# efml_line_attr
+- name: meta.line.attr.efml
+  begin: ^\t*?(?=#)
+  end: $
+  patterns:
+  - include: '#efml-attr'
+  - include: '#efml-full-mustache'
+  - include: '#efml-pure-string'
+
+# efml_line_prop
+- name: meta.line.prop.efml
+  begin: ^\t*?(?=%)
+  end: $
+  patterns:
+  - include: '#efml-prop'
+  - include: '#efml-full-mustache'
+  - include: '#efml-pure-string'
+
+# efml_line_event
+- name: meta.line.event.efml
+  begin: ^\t*?(?=@)
+  end: $
+  patterns:
+  - include: '#efml-event'
+  - include: '#efml-event-method'
+  - include: '#efml-full-mustache'
+  - include: '#efml-pure-string'
+
+# efml_node
+- name: storage.type.eft
+  match: ^\t*?[+-].*?$
+
+# efml_text
+- name: text.efml
+  begin: ^\t*+\.
+  end: $
+  patterns:
+  - include: '#efml-escape'
+  - include: '#efml-mustache'
+
+# efml_comment
+- name: comment.line.efml
+  begin: ^\t*+[^>.#%@+-]
+  end: $
+
+repository:
+  efml-tag:
+    patterns:
+    - name: entity.name.tag.block.any.efml
+      begin: \>
+      end: (?=(\.|\#))|$
+
+  efml-tag-class:
+    patterns:
+    - name: meta.selector.css entity.other.attribute-name.class.efml
+      begin: \.
+      end: (?=(\#|$))
+
+  efml-tag-name:
+    patterns:
+    - name: entity.other.attribute-name.id.html
+      begin: \#
+      end: $
+
+  efml-attr:
+    patterns:
+    - name: entity.other.attribute-name.html
+      begin: \#
+      end: (?=\=)|$
+
+  efml-prop:
+    patterns:
+    - name: keyword.control.efml
+      begin: \%
+      end: ((?=\=)|$)
+
+  efml-event:
+    patterns:
+    - name: variable.function.efml
+      begin: \@
+      end: ((?=\=)|$)
+
+  efml-event-method:
+    patterns:
+    - name: entity.name.function.efml
+      begin: (?<=\=)
+      end: ((?=:)|$)
+
+  efml-pure-string:
+    patterns:
+    - name: string.efml
+      begin: (?<=(\=|:))
+      end: $
+      patterns:
+      - include: '#efml-escape'
+
+  efml-escape:
+    patterns:
+    - name: constant.character.escape.efml
+      match: \&(u.{0,4}|x.{0,2}|.?)
+
+  efml-full-mustache:
+    patterns:
+    - name: expression.embbeded.efml
+      match: (?<=(\=|:)) *+\{\{(.+?)(\=(.+?))?\}\} *+$
+      captures:
+        '2': {name: variable.other.object.efml}
+        '4': {name: string.mustache.efml}
+
+  efml-class-mustache:
+    patterns:
+    - name: meta.selector.css entity.other.attribute-name.class.mustache.efml
+      match: \.\{\{([^#]+?)(\=([^#]+?))?\}\}((?=#)|$)
+      captures:
+        '1': {name: variable.other.object.efml}
+        '3': {name: string.mustache.efml}
+
+  efml-mustache:
+    patterns:
+    - name: expression.embbeded.efml
+      begin: \{\{
+      end: \}\}
+      patterns:
+      - include: '#mustache-path'
+      - include: '#mustache-string'
+
+  mustache-path:
+    patterns:
+    - name: variable.other.object.efml
+      begin: (?<=\{\{)
+      end: (?=(\=|\}\}|$))
+
+  mustache-string:
+    patterns:
+    - name: string.mustache.efml
+      begin: (?<=\=)
+      end: (?=\}\})
+      patterns:
+      - include: '#mustache-escape'
+
+  mustache-escape:
+    patterns:
+    - name: constant.character.escape.efml
+      match: \&(u(?!}})..(?!}}).(?!}}).|x(?!}}).(?!}}).|(?!}}).)
