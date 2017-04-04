@@ -4,6 +4,7 @@
 name: EFML
 comment: EFML syntax for SublimeText
 file_extensions:
+  - ef
   - eft
 scope: text.eft
 contexts:
