@@ -13,7 +13,7 @@
 	<array>
 		<dict>
 			<key>begin</key>
-			<string>^\t*?(?=\&gt;)</string>
+			<string>^\s*?(?=\&gt;)</string>
 			<key>end</key>
 			<string>$</string>
 			<key>name</key>
@@ -40,7 +40,7 @@
 		</dict>
 		<dict>
 			<key>begin</key>
-			<string>^\t*?(?=#)</string>
+			<string>^\s*?(?=#)</string>
 			<key>end</key>
 			<string>$</string>
 			<key>name</key>
@@ -63,7 +63,7 @@
 		</dict>
 		<dict>
 			<key>begin</key>
-			<string>^\t*?(?=%)</string>
+			<string>^\s*?(?=%)</string>
 			<key>end</key>
 			<string>$</string>
 			<key>name</key>
@@ -86,7 +86,7 @@
 		</dict>
 		<dict>
 			<key>begin</key>
-			<string>^\t*?(?=@)</string>
+			<string>^\s*?(?=@)</string>
 			<key>end</key>
 			<string>$</string>
 			<key>name</key>
@@ -113,13 +113,13 @@
 		</dict>
 		<dict>
 			<key>match</key>
-			<string>^\t*?[+-].*?$</string>
+			<string>^\s*?[+-].*?$</string>
 			<key>name</key>
 			<string>storage.type.eft</string>
 		</dict>
 		<dict>
 			<key>begin</key>
-			<string>^\t*+\.</string>
+			<string>^\s*?\.</string>
 			<key>end</key>
 			<string>$</string>
 			<key>name</key>
@@ -138,7 +138,7 @@
 		</dict>
 		<dict>
 			<key>begin</key>
-			<string>^\t*+[^&gt;.#%@+-]</string>
+			<string>^\s*?[^&gt;.#%@+-]</string>
 			<key>end</key>
 			<string>$</string>
 			<key>name</key>
@@ -168,19 +168,19 @@
 				<dict>
 					<key>captures</key>
 					<dict>
-						<key>1</key>
+						<key>2</key>
 						<dict>
 							<key>name</key>
 							<string>variable.other.object.efml</string>
 						</dict>
-						<key>3</key>
+						<key>4</key>
 						<dict>
 							<key>name</key>
 							<string>string.mustache.efml</string>
 						</dict>
 					</dict>
 					<key>match</key>
-					<string>\.\{\{([^#]+?)(\=([^#]+?))?\}\}((?=#)|$)</string>
+					<string>\.\{\{(([^#]+?)(\=([^#]+?))?)?\}\}((?=#)|$)</string>
 					<key>name</key>
 					<string>meta.selector.css entity.other.attribute-name.class.mustache.efml</string>
 				</dict>
@@ -233,19 +233,19 @@
 				<dict>
 					<key>captures</key>
 					<dict>
-						<key>2</key>
+						<key>3</key>
 						<dict>
 							<key>name</key>
 							<string>variable.other.object.efml</string>
 						</dict>
-						<key>4</key>
+						<key>5</key>
 						<dict>
 							<key>name</key>
 							<string>string.mustache.efml</string>
 						</dict>
 					</dict>
 					<key>match</key>
-					<string>(?&lt;=(\=|:)) *+\{\{(.+?)(\=(.+?))?\}\} *+$</string>
+					<string>(?&lt;=(\=|:)) *+\{\{((.+?)(\=(.+?))?)?\}\} *+$</string>
 					<key>name</key>
 					<string>expression.embbeded.efml</string>
 				</dict>

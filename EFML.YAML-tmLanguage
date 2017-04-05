@@ -8,7 +8,7 @@ uuid: ee7d9ea0-f056-4365-bc31-0512369e8c17
 patterns:
 # efml_line_tag
 - name: meta.selector.efml
-  begin: ^\t*?(?=\>)
+  begin: ^\s*?(?=\>)
   end: $
   patterns:
   - include: '#efml-tag'
@@ -18,7 +18,7 @@ patterns:
 
 # efml_line_attr
 - name: meta.line.attr.efml
-  begin: ^\t*?(?=#)
+  begin: ^\s*?(?=#)
   end: $
   patterns:
   - include: '#efml-attr'
@@ -27,7 +27,7 @@ patterns:
 
 # efml_line_prop
 - name: meta.line.prop.efml
-  begin: ^\t*?(?=%)
+  begin: ^\s*?(?=%)
   end: $
   patterns:
   - include: '#efml-prop'
@@ -36,7 +36,7 @@ patterns:
 
 # efml_line_event
 - name: meta.line.event.efml
-  begin: ^\t*?(?=@)
+  begin: ^\s*?(?=@)
   end: $
   patterns:
   - include: '#efml-event'
@@ -46,11 +46,11 @@ patterns:
 
 # efml_node
 - name: storage.type.eft
-  match: ^\t*?[+-].*?$
+  match: ^\s*?[+-].*?$
 
 # efml_text
 - name: text.efml
-  begin: ^\t*+\.
+  begin: ^\s*?\.
   end: $
   patterns:
   - include: '#efml-escape'
@@ -58,7 +58,7 @@ patterns:
 
 # efml_comment
 - name: comment.line.efml
-  begin: ^\t*+[^>.#%@+-]
+  begin: ^\s*?[^>.#%@+-]
   end: $
 
 repository:
@@ -120,18 +120,18 @@ repository:
   efml-full-mustache:
     patterns:
     - name: expression.embbeded.efml
-      match: (?<=(\=|:)) *+\{\{(.+?)(\=(.+?))?\}\} *+$
+      match: (?<=(\=|:)) *+\{\{((.+?)(\=(.+?))?)?\}\} *+$
       captures:
-        '2': {name: variable.other.object.efml}
-        '4': {name: string.mustache.efml}
+        '3': {name: variable.other.object.efml}
+        '5': {name: string.mustache.efml}
 
   efml-class-mustache:
     patterns:
     - name: meta.selector.css entity.other.attribute-name.class.mustache.efml
-      match: \.\{\{([^#]+?)(\=([^#]+?))?\}\}((?=#)|$)
+      match: \.\{\{(([^#]+?)(\=([^#]+?))?)?\}\}((?=#)|$)
       captures:
-        '1': {name: variable.other.object.efml}
-        '3': {name: string.mustache.efml}
+        '2': {name: variable.other.object.efml}
+        '4': {name: string.mustache.efml}
 
   efml-mustache:
     patterns:
