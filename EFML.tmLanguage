@@ -26,15 +26,11 @@
 				</dict>
 				<dict>
 					<key>include</key>
-					<string>#efml-tag-name</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#efml-class-mustache</string>
-				</dict>
-				<dict>
-					<key>include</key>
 					<string>#efml-tag-class</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#efml-tag-ref</string>
 				</dict>
 			</array>
 		</dict>
@@ -53,11 +49,7 @@
 				</dict>
 				<dict>
 					<key>include</key>
-					<string>#efml-full-mustache</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#efml-pure-string</string>
+					<string>#efml-string</string>
 				</dict>
 			</array>
 		</dict>
@@ -76,11 +68,7 @@
 				</dict>
 				<dict>
 					<key>include</key>
-					<string>#efml-full-mustache</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#efml-pure-string</string>
+					<string>#efml-string</string>
 				</dict>
 			</array>
 		</dict>
@@ -103,11 +91,7 @@
 				</dict>
 				<dict>
 					<key>include</key>
-					<string>#efml-full-mustache</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#efml-pure-string</string>
+					<string>#efml-string</string>
 				</dict>
 			</array>
 		</dict>
@@ -161,31 +145,6 @@
 				</dict>
 			</array>
 		</dict>
-		<key>efml-class-mustache</key>
-		<dict>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>captures</key>
-					<dict>
-						<key>2</key>
-						<dict>
-							<key>name</key>
-							<string>variable.other.object.efml</string>
-						</dict>
-						<key>4</key>
-						<dict>
-							<key>name</key>
-							<string>string.mustache.efml</string>
-						</dict>
-					</dict>
-					<key>match</key>
-					<string>\.\{\{(([^#]+?)(\=([^#]+?))?)?\}\}((?=#)|$)</string>
-					<key>name</key>
-					<string>meta.selector.css entity.other.attribute-name.class.mustache.efml</string>
-				</dict>
-			</array>
-		</dict>
 		<key>efml-escape</key>
 		<dict>
 			<key>patterns</key>
@@ -226,31 +185,6 @@
 				</dict>
 			</array>
 		</dict>
-		<key>efml-full-mustache</key>
-		<dict>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>captures</key>
-					<dict>
-						<key>3</key>
-						<dict>
-							<key>name</key>
-							<string>variable.other.object.efml</string>
-						</dict>
-						<key>5</key>
-						<dict>
-							<key>name</key>
-							<string>string.mustache.efml</string>
-						</dict>
-					</dict>
-					<key>match</key>
-					<string>(?&lt;=(\=|:)) *+\{\{((.+?)(\=(.+?))?)?\}\} *+$</string>
-					<key>name</key>
-					<string>expression.embbeded.efml</string>
-				</dict>
-			</array>
-		</dict>
 		<key>efml-mustache</key>
 		<dict>
 			<key>patterns</key>
@@ -259,7 +193,7 @@
 					<key>begin</key>
 					<string>\{\{</string>
 					<key>end</key>
-					<string>\}\}</string>
+					<string>\}\}|$</string>
 					<key>name</key>
 					<string>expression.embbeded.efml</string>
 					<key>patterns</key>
@@ -290,7 +224,7 @@
 				</dict>
 			</array>
 		</dict>
-		<key>efml-pure-string</key>
+		<key>efml-string</key>
 		<dict>
 			<key>patterns</key>
 			<array>
@@ -305,7 +239,7 @@
 					<array>
 						<dict>
 							<key>include</key>
-							<string>#efml-escape</string>
+							<string>#efml-mustache</string>
 						</dict>
 					</array>
 				</dict>
@@ -333,19 +267,26 @@
 					<key>begin</key>
 					<string>\.</string>
 					<key>end</key>
-					<string>(?=(\#|$))</string>
+					<string>(?=((#([^\}]|\}[^\}])*)|$))</string>
 					<key>name</key>
 					<string>meta.selector.css entity.other.attribute-name.class.efml</string>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>include</key>
+							<string>#efml-mustache</string>
+						</dict>
+					</array>
 				</dict>
 			</array>
 		</dict>
-		<key>efml-tag-name</key>
+		<key>efml-tag-ref</key>
 		<dict>
 			<key>patterns</key>
 			<array>
 				<dict>
 					<key>begin</key>
-					<string>\#</string>
+					<string>\#([^\}]|\}[^\}])*</string>
 					<key>end</key>
 					<string>$</string>
 					<key>name</key>

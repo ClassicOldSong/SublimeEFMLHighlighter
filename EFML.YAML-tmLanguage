@@ -12,9 +12,8 @@ patterns:
   end: $
   patterns:
   - include: '#efml-tag'
-  - include: '#efml-tag-name'
-  - include: '#efml-class-mustache'
   - include: '#efml-tag-class'
+  - include: '#efml-tag-ref'
 
 # efml_line_attr
 - name: meta.line.attr.efml
@@ -22,8 +21,7 @@ patterns:
   end: $
   patterns:
   - include: '#efml-attr'
-  - include: '#efml-full-mustache'
-  - include: '#efml-pure-string'
+  - include: '#efml-string'
 
 # efml_line_prop
 - name: meta.line.prop.efml
@@ -31,8 +29,7 @@ patterns:
   end: $
   patterns:
   - include: '#efml-prop'
-  - include: '#efml-full-mustache'
-  - include: '#efml-pure-string'
+  - include: '#efml-string'
 
 # efml_line_event
 - name: meta.line.event.efml
@@ -41,8 +38,7 @@ patterns:
   patterns:
   - include: '#efml-event'
   - include: '#efml-event-method'
-  - include: '#efml-full-mustache'
-  - include: '#efml-pure-string'
+  - include: '#efml-string'
 
 # efml_node
 - name: storage.type.eft
@@ -72,12 +68,14 @@ repository:
     patterns:
     - name: meta.selector.css entity.other.attribute-name.class.efml
       begin: \.
-      end: (?=(\#|$))
+      end: (?=((#([^\}]|\}[^\}])*)|$))
+      patterns:
+      - include: '#efml-mustache'
 
-  efml-tag-name:
+  efml-tag-ref:
     patterns:
     - name: entity.other.attribute-name.id.html
-      begin: \#
+      begin: \#([^\}]|\}[^\}])*
       end: $
 
   efml-attr:
@@ -104,40 +102,24 @@ repository:
       begin: (?<=\=)
       end: ((?=:)|$)
 
-  efml-pure-string:
+  efml-string:
     patterns:
     - name: string.efml
       begin: (?<=(\=|:))
       end: $
       patterns:
-      - include: '#efml-escape'
+      - include: '#efml-mustache'
 
   efml-escape:
     patterns:
     - name: constant.character.escape.efml
       match: \&(u.{0,4}|x.{0,2}|.?)
 
-  efml-full-mustache:
-    patterns:
-    - name: expression.embbeded.efml
-      match: (?<=(\=|:)) *+\{\{((.+?)(\=(.+?))?)?\}\} *+$
-      captures:
-        '3': {name: variable.other.object.efml}
-        '5': {name: string.mustache.efml}
-
-  efml-class-mustache:
-    patterns:
-    - name: meta.selector.css entity.other.attribute-name.class.mustache.efml
-      match: \.\{\{(([^#]+?)(\=([^#]+?))?)?\}\}((?=#)|$)
-      captures:
-        '2': {name: variable.other.object.efml}
-        '4': {name: string.mustache.efml}
-
   efml-mustache:
     patterns:
     - name: expression.embbeded.efml
       begin: \{\{
-      end: \}\}
+      end: \}\}|$
       patterns:
       - include: '#mustache-path'
       - include: '#mustache-string'
