@@ -68,14 +68,14 @@ repository:
     patterns:
     - name: meta.selector.css entity.other.attribute-name.class.efml
       begin: \.
-      end: (?=((#([^\}]|\}[^\}])*)|$))
+      end: (?=((#([^\}]|\}[^\}])*$)|$))
       patterns:
       - include: '#efml-mustache'
 
   efml-tag-ref:
     patterns:
     - name: entity.other.attribute-name.id.html
-      begin: \#([^\}]|\}[^\}])*
+      begin: \#([^\}]|\}[^\}])*$
       end: $
 
   efml-attr:
