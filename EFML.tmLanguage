@@ -124,7 +124,7 @@
 		</dict>
 		<dict>
 			<key>begin</key>
-			<string>^\s*?[^&gt;.#%@+-]</string>
+			<string>^\s*?[^&gt;.|#%@+-]</string>
 			<key>end</key>
 			<string>$</string>
 			<key>name</key>

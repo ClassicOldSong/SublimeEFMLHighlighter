@@ -54,7 +54,7 @@ patterns:
 
 # efml_comment
 - name: comment.line.efml
-  begin: ^\s*?[^>.#%@+-]
+  begin: ^\s*?[^>.|#%@+-]
   end: $
 
 repository:
