@@ -6,6 +6,8 @@
 	<array>
 		<string>ef</string>
 		<string>eft</string>
+		<string>efm</string>
+		<string>efml</string>
 	</array>
 	<key>name</key>
 	<string>EFML</string>
@@ -103,7 +105,7 @@
 		</dict>
 		<dict>
 			<key>begin</key>
-			<string>^\s*?\.</string>
+			<string>^\s*?(\.|\|)</string>
 			<key>end</key>
 			<string>$</string>
 			<key>name</key>

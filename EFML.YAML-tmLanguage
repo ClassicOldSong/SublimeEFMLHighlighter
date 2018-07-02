@@ -2,7 +2,7 @@
 ---
 name: EFML
 scopeName: text.efml
-fileTypes: [ef, eft]
+fileTypes: [ef, eft, efm, efml]
 uuid: ee7d9ea0-f056-4365-bc31-0512369e8c17
 
 patterns:
@@ -46,7 +46,7 @@ patterns:
 
 # efml_text
 - name: text.efml
-  begin: ^\s*?\.
+  begin: ^\s*?(\.|\|)
   end: $
   patterns:
   - include: '#efml-escape'
